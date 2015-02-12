@@ -41,4 +41,8 @@ public class HTTPRequest {
         conn.setRequestMethod("POST");
         return new HTTPResult(conn);
     }
+    
+    public HTTPResult Api( String origin, String password ) throws IOException {
+        return Get(origin + "(" + password + ")");
+    }
 }

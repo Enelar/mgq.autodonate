@@ -15,7 +15,7 @@ public class Main extends JavaPlugin implements Listener {
    @Override
    public void onEnable() {
 	   _log.info("[MGQ][Donut] Enabled");
-       Bukkit.getPluginManager().registerEvents(this, this);
+       planner p = new planner();
    }
    
    @Override

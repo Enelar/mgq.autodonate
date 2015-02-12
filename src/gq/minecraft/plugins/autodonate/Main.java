@@ -43,6 +43,12 @@ public class Main extends JavaPlugin implements Listener {
              p.main_here.unlock();
            }
        }, 0L, 20L);
+       scheduler.scheduleAsyncRepeatingTask(this, new Runnable() {
+		public void run() {
+			p.ThreadIteration();
+			_log.info("GET");
+		}
+       }, 0L, 200L);
    }
    
    @Override

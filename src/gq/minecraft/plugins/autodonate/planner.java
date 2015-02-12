@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.json.*;
 import org.json.simple.parser.JSONParser;
@@ -20,10 +22,36 @@ public class planner {
 	public static final String tasks_url = origin_url + "GetTasks";
 	public static final String report_url = origin_url + "Report";
 	
+	public Lock main_here;
+	
+	public planner() {
+		main_here = new ReentrantLock();
+	}
+	
 	Map<Integer, command> commands;
 	Vector<Integer> reports;
 	
+	public void ThreadIteration() {
+		ReportComplete();
+		AppendCommands();
+	}
 	
+	public void ReportComplete() {
+		HTTPRequest request = new HTTPRequest();
+		main_here.lock();
+		Iterator<Integer> i = reports.iterator();
+		while (i.hasNext()) {
+			Integer id = i.next();
+			try {
+				request.Api(report_url, i.toString() + "1");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		reports.clear();
+		main_here.unlock();
+	}
 
 	public void AppendCommands() {
 		HTTPRequest request = new HTTPRequest();
@@ -49,6 +77,7 @@ public class planner {
 		if (data == null)
 			return;
 		Vector<command> tasks = JSONToCommands(newobj.getJSONArray("commands"));
+		main_here.lock();
 		synchronized (commands) {
 			Iterator<command> i = tasks.iterator();
 			while (i.hasNext()) {
@@ -58,6 +87,7 @@ public class planner {
 				commands.put(cur.id, cur);
 			}
 		}
+		main_here.unlock();
 	}
 	
 	private Vector<command> JSONToCommands( JSONArray tasks ) {

@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -26,10 +27,18 @@ public class planner {
 	
 	public planner() {
 		main_here = new ReentrantLock();
+		commands = new TreeMap<Integer, command>();
+		reports = new Vector<Integer>();
 	}
 	
-	Map<Integer, command> commands;
+	TreeMap<Integer, command> commands;
 	Vector<Integer> reports;
+	
+	public void Report(Integer id) {
+		// Lock should be already accured!!
+		reports.add(id);
+		commands.remove(id);
+	}
 	
 	public void ThreadIteration() {
 		ReportComplete();

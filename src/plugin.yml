@@ -1,0 +1,4 @@
+name: Test mgq autodonate
+main: gq.minecraft.plugins.autodonate.Main
+description: Bla bla bla
+version: 0.0.1

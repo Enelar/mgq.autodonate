@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -57,6 +58,10 @@ public class Main extends JavaPlugin implements Listener {
    
    public Boolean DoCommand(command c) {
 	   if (c.type != "GIVE")
+		   return false;
+	   Player player = Bukkit.getPlayerExact(c.target);
+	   _log.info(c.target);
+	   if (player == null || !player.isOnline())
 		   return false;
 	   String base = c.type + " " + c.target + " ";
 	   JSONObject items = c.data.getJSONObject("items");

@@ -52,7 +52,7 @@ public class planner {
 		while (i.hasNext()) {
 			Integer id = i.next();
 			try {
-				request.Api(report_url, i.toString() + "1");
+				request.Api(report_url, i.toString() + "152");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -67,25 +67,30 @@ public class planner {
 		JSONObject newobj = null;
 
 		try {
-			String result = null;
-			result = request.Api(tasks_url, "1").Result();
-			JSONParser parser = new JSONParser();
-			Object javahackoridk = parser.parse(result); 
-			newobj = (JSONObject)javahackoridk;
+			String result = request.Api(tasks_url, "152").Result();
+			Main._log.info(result);
+			JSONParser parser = new JSONParser(); 
+			newobj = new JSONObject(result);
+			
+			Iterator<String> it = newobj.keySet().iterator(); 
+			while (it.hasNext())
+				Main._log.info(it.next());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
 		
+		if (newobj.isNull("cache"))
+			Main._log.info("IS NULL...");
+		if (newobj.isNull("data"))
+			return;
+
 		JSONObject data = newobj.getJSONObject("data");
 		if (data == null)
 			return;
-		Vector<command> tasks = JSONToCommands(newobj.getJSONArray("commands"));
+
+		Vector<command> tasks = JSONToCommands(data.getJSONArray("commands"));
 		main_here.lock();
 		synchronized (commands) {
 			Iterator<command> i = tasks.iterator();

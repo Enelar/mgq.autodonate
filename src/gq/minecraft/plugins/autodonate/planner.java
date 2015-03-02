@@ -69,13 +69,10 @@ public class planner {
 
 		try {
 			String result = request.Api(tasks_url, "152").Result();
-			Main._log.info(result);
 			JSONParser parser = new JSONParser(); 
 			newobj = new JSONObject(result);
 			
 			Iterator<String> it = newobj.keySet().iterator(); 
-			while (it.hasNext())
-				Main._log.info(it.next());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

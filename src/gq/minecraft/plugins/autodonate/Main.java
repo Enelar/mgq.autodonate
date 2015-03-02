@@ -49,9 +49,8 @@ public class Main extends JavaPlugin implements Listener {
        scheduler.scheduleAsyncRepeatingTask(this, new Runnable() {
 		public void run() {
 			p.ThreadIteration();
-			_log.info("GET");
 		}
-       }, 0L, 200L);
+       }, 0L, 2000L);
    }
    
    @Override

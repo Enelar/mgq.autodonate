@@ -27,6 +27,7 @@ public class HTTPRequest {
     }
 
     public HTTPResult Get( String urlToRead ) throws IOException {
+    	Main._log.info(urlToRead);
         URL url = new URL(urlToRead);
         GetLock();
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

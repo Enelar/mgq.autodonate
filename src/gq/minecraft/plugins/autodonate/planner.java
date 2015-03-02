@@ -36,6 +36,7 @@ public class planner {
 	
 	public void Report(Integer id) {
 		// Lock should be already accured!!
+		Main._log.info("Reporting " + id);
 		reports.add(id);
 		commands.remove(id);
 	}
@@ -52,7 +53,7 @@ public class planner {
 		while (i.hasNext()) {
 			Integer id = i.next();
 			try {
-				request.Api(report_url, i.toString() + "152");
+				request.Api(report_url, id.toString()).Result();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

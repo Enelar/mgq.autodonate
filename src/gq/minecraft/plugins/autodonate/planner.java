@@ -68,7 +68,7 @@ public class planner {
 		JSONObject newobj = null;
 
 		try {
-			String result = request.Api(tasks_url, "152").Result();
+			String result = request.Api(tasks_url, Main.server_id).Result();
 			JSONParser parser = new JSONParser(); 
 			newobj = new JSONObject(result);
 			

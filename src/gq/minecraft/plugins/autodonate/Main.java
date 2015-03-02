@@ -18,6 +18,7 @@ import org.json.JSONObject;
 public class Main extends JavaPlugin implements Listener {
    public static final Logger _log = Logger.getLogger("Minecraft");
    public planner p;
+   public static final String server_id = "152";
  
    @Override
    public void onEnable() {

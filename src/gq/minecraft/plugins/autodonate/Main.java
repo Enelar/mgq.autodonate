@@ -32,12 +32,14 @@ public class Main extends JavaPlugin implements Listener {
                p.main_here.unlock();
                return;
              }
+
              Iterator<Entry<Integer, command>> i =
                 p.commands.entrySet().iterator();
              while (i.hasNext()) {
                 Entry<Integer, command> entry = i.next();
                 if (!DoCommand(entry.getValue()))
                    continue;
+                _log.info("Finishing command");
                 p.Report(entry.getKey());
                 break;
              }
@@ -56,7 +58,16 @@ public class Main extends JavaPlugin implements Listener {
    public void onDisable() {
    }
    
-   public Boolean DoCommand(command c) {
+   public Boolean DoCommand(command c) {	   
+	   if (c.type.equals("GIVE"))
+		   return GiveCommand(c);
+	   if (c.type.equals("V0_GROUP_ADD"))
+		   return CardsCommand(c);
+	   _log.info("Command not found. Maybe you should update? " + c.type);
+	   return false;
+   }
+   
+   private Boolean GiveCommand(command c) {
 	   if (c.type != "GIVE")
 		   return false;
 	   Player player = Bukkit.getPlayerExact(c.target);
@@ -78,5 +89,9 @@ public class Main extends JavaPlugin implements Listener {
 	
 	   _log.info("[MGQ] Executed GIVE command " + c.id.toString());
 	   return true;
+   }
+   
+   private Boolean CardsCommand(command c) {
+	   return false;
    }
 }

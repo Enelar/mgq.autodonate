@@ -92,6 +92,15 @@ public class Main extends JavaPlugin implements Listener {
    }
    
    private Boolean CardsCommand(command c) {
-	   return false;
+	   String group = c.data.getString("group");
+	   if (group == null)
+	   {
+		   _log.info("Card command broken");
+		   return false;
+	   }
+	   String command = "pex user " + c.target + " group add " + group;
+	   _log.info(command);
+	   Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
+	   return true;
    }
 }
